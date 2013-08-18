@@ -3,7 +3,7 @@ TEMPLATE = lib
 # Static library without any Qt functionality
 QT -= gui core
 
-CONFIG += static exceptions stl console withfreetype withserialization
+CONFIG += static exceptions stl console withfreetype #withserialization
 CONFIG -= thread qt rtti warn_on
 
 VERSION = 1.0.0
@@ -13,7 +13,7 @@ INCLUDEPATH += ../SDK21/CHeaders/XPLM
 INCLUDEPATH += ../SDK21/CHeaders/Widgets
 
 # Defined to use X-Plane SDK 2.1 capabilities - no backward compatibility before 10
-DEFINES += XPLM210
+DEFINES += XPLM200
 
 OBJECTS_DIR  = objects
 TARGET = ppl
