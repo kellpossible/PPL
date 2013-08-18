@@ -219,6 +219,7 @@ FontHandle FontMgr::loadFont(const char* inFontPath, const char * inStartMem, co
     glBindTexture(GL_TEXTURE_2D, info->tex_id);
 #else
     XPLMGenerateTextureNumbers(&info->tex_id, 1);
+    XPLMSetGraphicsState(0,1,0,0,1,0,0);
     XPLMBindTexture2d(info->tex_id, 0);
 #endif
     // We have to 0 out the memory or we'll get artifacts when the glyphs are cut
@@ -425,6 +426,7 @@ void FontMgr::displayTexture(
 #ifdef BUILD_FOR_STANDALONE
     glBindTexture(GL_TEXTURE_2D, inFont->tex_id);
 #else
+    XPLMSetGraphicsState(0,1,0,0,1,0,0);
     XPLMBindTexture2d(inFont->tex_id, 0);
 #endif
     glColor3f(1.0, 0.0, 0.0);
@@ -479,6 +481,7 @@ void FontMgr::drawRange(
 #ifdef BUILD_FOR_STANDALONE
     glBindTexture(GL_TEXTURE_2D, inFont->tex_id);
 #else
+    XPLMSetGraphicsState(0,1,0,0,1,0,0);
     XPLMBindTexture2d(inFont->tex_id, 0);
 #endif
 
