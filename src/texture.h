@@ -31,7 +31,6 @@
 #include <string>
 #include <vector>
 #include "namespaces.h"
-#include "stdint.h"
 
 namespace PPLNAMESPACE {
 
@@ -43,35 +42,35 @@ public:
 
     struct BMPFILEHEADER
     {
-        int16_t   bfType;
-        int32_t   bfSize;
-        int16_t   bfReserved1;
-        int16_t   bfReserved2;
-        int32_t    bfOffBits;
+        short   bfType;
+        long    bfSize;
+        short   bfReserved1;
+        short   bfReserved2;
+        long    bfOffBits;
     };
 
     struct BMPINFOHEADER
     {
-        int32_t    biSize;
-        int32_t    biWidth;
-        int32_t    biHeight;
-        int16_t   biPlanes;
-        int16_t   biBitCount;
-        int32_t    biCompression;
-        int32_t    biSizeImage;
-        int32_t    biXPelsPerMeter;
-        int32_t    biYPelsPerMeter;
-        int32_t    biClrUsed;
-        int32_t    biClrImportant;
+        long    biSize;
+        long    biWidth;
+        long    biHeight;
+        short   biPlanes;
+        short   biBitCount;
+        long    biCompression;
+        long    biSizeImage;
+        long    biXPelsPerMeter;
+        long    biYPelsPerMeter;
+        long    biClrUsed;
+        long    biClrImportant;
     };
 
     struct IMAGEDATA
     {
         std::vector<unsigned char> pData;
-        int32_t    Width;
-        int32_t    Height;
-        int32_t    Padding;
-        int16_t   Channels;
+        long    Width;
+        long    Height;
+        long    Padding;
+        short   Channels;
         unsigned int bpp;
     };
 
@@ -82,6 +81,8 @@ public:
     int id() const;
     int width() const;
     int height() const;
+    void drawTex(float left, float top, float right, float bottom, float alpha);
+    void drawColoredTex(float left, float top, float right, float bottom, float color[]); //color[4], including alpha
 
 private:
 

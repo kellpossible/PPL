@@ -55,38 +55,38 @@
 using namespace PPLNAMESPACE;
 
 #if APL && defined(__ppc__)
-int16_t Endian(int16_t Data)
+short Endian(short Data)
 {
     unsigned char *pBuffer = (unsigned char *)&Data;
-    int16_t Result = (int16_t)(pBuffer[0] & 0xff) + ( (int16_t)(pBuffer[1] & 0xff) << 8) ;
+    short Result = (short)(pBuffer[0] & 0xff) + ( (short)(pBuffer[1] & 0xff) << 8) ;
     return(Result);
 }
 
-int32_t Endian(int32_t Data)
+long Endian(long Data)
 {
     unsigned char *pBuffer = (unsigned char *)&Data;
 
-    int32_t Result =     (int32_t)(pBuffer[0] & 0xff)
-            + ( (int32_t)(pBuffer[1] & 0xff) << 8)
-            + ( (int32_t)(pBuffer[2] & 0xff) << 16)
-            + ( (int32_t)(pBuffer[3] & 0xff) << 24);
+    long Result =     (long)(pBuffer[0] & 0xff)
+            + ( (long)(pBuffer[1] & 0xff) << 8)
+            + ( (long)(pBuffer[2] & 0xff) << 16)
+            + ( (long)(pBuffer[3] & 0xff) << 24);
 
     return(Result);
 }
 
-void SwapEndian(int16_t *Data)
+void SwapEndian(short *Data)
 {
     *Data = Endian(*Data);
 }
 
-void SwapEndian(int32_t *Data)
+void SwapEndian(long *Data)
 {
     *Data = Endian(*Data);
 }
 #else
 /// Only the ppc mac needs these so dummy functions for x86.
-void SwapEndian(int16_t *){}
-void SwapEndian(int32_t *){}
+void SwapEndian(short *){}
+void SwapEndian(long *){}
 #endif
 
 
@@ -96,7 +96,7 @@ Texture::Texture(const std::string& file_name)
     {
         BMPFILEHEADER header;
         BMPINFOHEADER image_info;
-        int32_t padding;
+        long padding;
 
         std::ifstream fs(file_name.c_str(), std::ios_base::in | std::ios_base::binary);
         if (!fs)
@@ -107,7 +107,7 @@ Texture::Texture(const std::string& file_name)
         fs.read(reinterpret_cast<char*>(&image_info), sizeof(image_info));
         if (!fs)
             throw std::runtime_error("Image info could not be read: "+file_name);
-      #if APL && defined(__ppc__)
+#if APL && defined(__ppc__)
         SwapEndian(&header.bfSize);
         SwapEndian(&header.bfOffBits);
 
@@ -124,9 +124,9 @@ Texture::Texture(const std::string& file_name)
               (image_info.biBitCount == 24) &&
               (image_info.biWidth > 0) &&
               (image_info.biHeight > 0)))
-            throw std::runtime_error("Image is not a bitmap: "+file_name);
+            throw std::runtime_error("Image is not a bitmap");
         if (!((header.bfSize + image_info.biSize - header.bfOffBits) >= (image_info.biWidth * image_info.biHeight * 3)))
-            throw std::runtime_error("Image size mismatch: "+file_name);
+            throw std::runtime_error("Image size mismatch");
         padding = (image_info.biWidth * 3 + 3) & ~3;
         padding -= image_info.biWidth * 3;
 
@@ -272,7 +272,7 @@ int Texture::height() const
 
 void Texture::swapRedBlue()
 {
-    int32_t x,y;
+    long x,y;
 
     /// Does not support 4 channels.
     if (m_imagedata.Channels == 4)
@@ -292,3 +292,50 @@ void Texture::swapRedBlue()
     }
 }
 
+void Texture::drawTex(float left, float top, float right, float bottom, float alpha)
+{
+#ifdef BUILD_FOR_STANDALONE
+    glBindTexture(GL_TEXTURE_2D, m_id);
+#else
+    XPLMBindTexture2d(m_id, 0);
+    XPLMSetGraphicsState(0,1,0,0,1,0,0);
+#endif
+
+    glColor4f(1,1,1,alpha);
+    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE );
+    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE );
+    glBegin(GL_QUADS);
+            glTexCoord2f(1, 0.0f); glVertex2f(right, bottom);
+            glTexCoord2f(0, 0.0f); glVertex2f(left, bottom);
+            glTexCoord2f(0, 1.0f); glVertex2f(left, top);
+            glTexCoord2f(1, 1.0f); glVertex2f(right, top);
+    glEnd();
+
+#ifndef BUILD_FOR_STANDALONE
+    XPLMSetGraphicsState(0,0,0,0,1,0,0);
+#endif
+}
+
+void Texture::drawColoredTex(float left, float top, float right, float bottom, float color[4])
+{
+#ifdef BUILD_FOR_STANDALONE
+    glBindTexture(GL_TEXTURE_2D, m_id);
+#else
+    XPLMBindTexture2d(m_id, 0);
+    XPLMSetGraphicsState(0,1,0,0,1,0,0);
+#endif
+
+    glColor4f(color[0],color[1],color[2],color[3]);
+    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE );
+    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE );
+    glBegin(GL_QUADS);
+            glTexCoord2f(1, 0.0f); glVertex2f(right, bottom);
+            glTexCoord2f(0, 0.0f); glVertex2f(left, bottom);
+            glTexCoord2f(0, 1.0f); glVertex2f(left, top);
+            glTexCoord2f(1, 1.0f); glVertex2f(right, top);
+    glEnd();
+
+#ifndef BUILD_FOR_STANDALONE
+    XPLMSetGraphicsState(0,0,0,0,1,0,0);
+#endif
+}
