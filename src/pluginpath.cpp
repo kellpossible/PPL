@@ -40,7 +40,7 @@ std::string PluginPath::plugin_directory = "";
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-std::string PluginPath::prependXPlanePath(const std::string& file)
+PPL_API std::string PluginPath::prependXPlanePath(const std::string& file)
 {
 #ifdef BUILD_FOR_STANDALONE
     return file;
@@ -53,7 +53,7 @@ std::string PluginPath::prependXPlanePath(const std::string& file)
 #endif
 }
 
-std::string PluginPath::prependPluginPath(const std::string& file)
+PPL_API std::string PluginPath::prependPluginPath(const std::string& file)
 {
 #ifdef BUILD_FOR_STANDALONE
     return file;
@@ -64,7 +64,7 @@ std::string PluginPath::prependPluginPath(const std::string& file)
 #endif
 }
 
-std::string PluginPath::prependPluginResourcesPath(const std::string& file)
+PPL_API std::string PluginPath::prependPluginResourcesPath(const std::string& file)
 {
     std::string res_path("Resources/");
     res_path.append(file);
@@ -78,7 +78,7 @@ std::string PluginPath::prependPluginResourcesPath(const std::string& file)
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-std::string PluginPath::prependPlanePath(const std::string& file)
+PPL_API std::string PluginPath::prependPlanePath(const std::string& file)
 {
 #ifdef BUILD_FOR_STANDALONE
     return file;
@@ -97,7 +97,7 @@ std::string PluginPath::prependPlanePath(const std::string& file)
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-void PluginPath::setPluginDirectoryName(const std::string& name)
+PPL_API void PluginPath::setPluginDirectoryName(const std::string& name)
 {
     PluginPath::plugin_directory = name;
 }

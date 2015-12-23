@@ -1,1 +1,18 @@
 The Plugin Patterns Library provides classes for common tasks with the XPLM SDK for the X-Plane flight simulator. It is provided under BSD license. Questions, support and pull request are handled through http://forums.x-plane.org/index.php?showtopic=49958 
+
+This fork is intended to allow PPL to be used as a header-only library, following a
+StackOverflow post here: http://http://stackoverflow.com/questions/25606736.
+
+To use it in this way, put `#define LIBRARY_INLINE` before including PPL headers:
+
+```cpp
+//main.cpp
+#define PRIVATENAMESPACE YourNamespaceHere
+#define INLINE_LIBRARY
+
+#include "log.h"
+#include "logwriter.h"
+...
+```
+
+PRIVATENAMESPACE should be a string, unique to your project. I understand this is necessary for 32-bit Windows plugins.

@@ -349,7 +349,7 @@ bool DataRef<std::string>::hasChanged() const;
 template <typename SimType>
 void DataRef<SimType>::forceChanged()
 {
-    m_history = std::numeric_limits<SimType>::max();
+    m_history = (std::numeric_limits<SimType>::max)();
 }
 
 template <>
@@ -588,5 +588,9 @@ void DataRef<std::string>::reserve();
 
 
 }
+
+#ifdef INLINE_LIBRARY
+#include "dataref.cpp"
+#endif
 
 #endif // DATAREF_H

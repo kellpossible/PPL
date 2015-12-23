@@ -96,4 +96,8 @@ private:
 
 }
 
+#ifdef INLINE_LIBRARY
+#include "pluginpath.cpp"
+#endif
+
 #endif // PLUGINPATH_H

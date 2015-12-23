@@ -35,73 +35,73 @@ using namespace PPLNAMESPACE;
 
 
 template<>
-void DataRef<int>::shareDataRef(const std::string& identifier, bool publish_in_dre)
+PPL_API void DataRef<int>::shareDataRef(const std::string& identifier, bool publish_in_dre)
 {
     share(XPLMShareData(identifier.c_str(), xplmType_Int, NotifactionFunc, this), publish_in_dre);
 }
 
 template<>
-void DataRef<float>::shareDataRef(const std::string& identifier, bool publish_in_dre)
+PPL_API void DataRef<float>::shareDataRef(const std::string& identifier, bool publish_in_dre)
 {
     share(XPLMShareData(identifier.c_str(), xplmType_Float, NotifactionFunc, this), publish_in_dre);
 }
 
 template<>
-void DataRef<double>::shareDataRef(const std::string& identifier, bool publish_in_dre)
+PPL_API void DataRef<double>::shareDataRef(const std::string& identifier, bool publish_in_dre)
 {
     share(XPLMShareData(identifier.c_str(), xplmType_Double, NotifactionFunc, this), publish_in_dre);
 }
 
 template<>
-void DataRef<std::vector<int> >::shareDataRef(const std::string& identifier, bool publish_in_dre)
+PPL_API void DataRef<std::vector<int> >::shareDataRef(const std::string& identifier, bool publish_in_dre)
 {
     share(XPLMShareData(identifier.c_str(), xplmType_IntArray, NotifactionFunc, this), publish_in_dre);
 }
 
 template<>
-void DataRef<std::vector<float> >::shareDataRef(const std::string& identifier, bool publish_in_dre)
+PPL_API void DataRef<std::vector<float> >::shareDataRef(const std::string& identifier, bool publish_in_dre)
 {
     share(XPLMShareData(identifier.c_str(), xplmType_FloatArray, NotifactionFunc, this), publish_in_dre);
 }
 
 template<>
-void DataRef<std::string>::shareDataRef(const std::string& identifier, bool publish_in_dre)
+PPL_API void DataRef<std::string>::shareDataRef(const std::string& identifier, bool publish_in_dre)
 {
     share(XPLMShareData(identifier.c_str(), xplmType_Data, NotifactionFunc, this), publish_in_dre);
 }
 
 template<>
-void DataRef<int>::unshareData()
+PPL_API void DataRef<int>::unshareData()
 {
     XPLMUnshareData(identifier_.c_str(), xplmType_Int, NotifactionFunc, this);
 }
 
 template<>
-void DataRef<float>::unshareData()
+PPL_API void DataRef<float>::unshareData()
 {
     XPLMUnshareData(identifier_.c_str(), xplmType_Float, NotifactionFunc, this);
 }
 
 template<>
-void DataRef<double>::unshareData()
+PPL_API void DataRef<double>::unshareData()
 {
     XPLMUnshareData(identifier_.c_str(), xplmType_Double, NotifactionFunc, this);
 }
 
 template<>
-void DataRef<std::vector<int> >::unshareData()
+PPL_API void DataRef<std::vector<int> >::unshareData()
 {
     XPLMUnshareData(identifier_.c_str(), xplmType_IntArray, NotifactionFunc, this);
 }
 
 template<>
-void DataRef<std::vector<float> >::unshareData()
+PPL_API void DataRef<std::vector<float> >::unshareData()
 {
     XPLMUnshareData(identifier_.c_str(), xplmType_FloatArray, NotifactionFunc, this);
 }
 
 template<>
-void DataRef<std::string>::unshareData()
+PPL_API void DataRef<std::string>::unshareData()
 {
     XPLMUnshareData(identifier_.c_str(), xplmType_Data, NotifactionFunc, this);
 }
@@ -113,42 +113,42 @@ void DataRef<std::string>::unshareData()
 
 
 template <>
-void DataRef<int>::checkDataType()
+PPL_API void DataRef<int>::checkDataType()
 {
     if ( XPLMGetDataRefTypes(m_data_ref) != xplmType_Int )
         throw IncompatibleTypeException(identifier_ + "declared to be int, but isn't.");
 }
 
 template <>
-void DataRef<float>::checkDataType()
+PPL_API void DataRef<float>::checkDataType()
 {
     if ( XPLMGetDataRefTypes(m_data_ref) != xplmType_Float )
         throw IncompatibleTypeException(identifier_ + "declared to be float, but isn't.");
 }
 
 template <>
-void DataRef<double>::checkDataType()
+PPL_API void DataRef<double>::checkDataType()
 {
     if ( XPLMGetDataRefTypes(m_data_ref) != (xplmType_Float | xplmType_Double) )
         throw IncompatibleTypeException(identifier_ + "declared to be double, but isn't.");
 }
 
 template <>
-void DataRef<std::vector<float> >::checkDataType()
+PPL_API void DataRef<std::vector<float> >::checkDataType()
 {
     if (XPLMGetDataRefTypes(m_data_ref) != xplmType_FloatArray)
         throw IncompatibleTypeException(identifier_ + "declared to be a float array, but isn't.");
 }
 
 template <>
-void DataRef<std::vector<int> >::checkDataType()
+PPL_API void DataRef<std::vector<int> >::checkDataType()
 {
     if (XPLMGetDataRefTypes(m_data_ref) != xplmType_IntArray)
         throw IncompatibleTypeException(identifier_ + "declared to be a int array, but isn't.");
 }
 
 template <>
-void DataRef<std::string>::checkDataType()
+PPL_API void DataRef<std::string>::checkDataType()
 {
     if (XPLMGetDataRefTypes(m_data_ref) != xplmType_Data)
         throw IncompatibleTypeException(identifier_ + "declared to be a byte array, but isn't.");
@@ -158,25 +158,25 @@ void DataRef<std::string>::checkDataType()
 ///////////////////////////////////////////////////////////////////////////////
 
 template <>
-DataRef<int>::operator int() const
+PPL_API DataRef<int>::operator int() const
 {
     return XPLMGetDatai(m_data_ref);
 }
 
 template <>
-DataRef<float>::operator float() const
+PPL_API DataRef<float>::operator float() const
 {
     return XPLMGetDataf(m_data_ref);
 }
 
 template <>
-DataRef<double>::operator double() const
+PPL_API DataRef<double>::operator double() const
 {
     return XPLMGetDatad(m_data_ref);
 }
 
 template <>
-DataRef<std::vector<float> >::operator std::vector<float>() const
+PPL_API DataRef<std::vector<float> >::operator std::vector<float>() const
 {
     cache_.resize(XPLMGetDatavf(m_data_ref, NULL, 0, 0));
     XPLMGetDatavf(m_data_ref, &cache_[0], 0, cache_.size());
@@ -184,7 +184,7 @@ DataRef<std::vector<float> >::operator std::vector<float>() const
 }
 
 template <>
-DataRef<std::vector<int> >::operator std::vector<int>() const
+PPL_API DataRef<std::vector<int> >::operator std::vector<int>() const
 {
     cache_.resize(XPLMGetDatavi(m_data_ref, NULL, 0, 0));
     XPLMGetDatavi(m_data_ref, &cache_[0], 0, cache_.size());
@@ -192,7 +192,7 @@ DataRef<std::vector<int> >::operator std::vector<int>() const
 }
 
 template <>
-DataRef<std::string>::operator std::string() const
+PPL_API DataRef<std::string>::operator std::string() const
 {
     cache_.resize(XPLMGetDatab(m_data_ref, NULL, 0, 0));
     XPLMGetDatab(m_data_ref, &cache_[0], 0, cache_.size());
@@ -205,7 +205,7 @@ DataRef<std::string>::operator std::string() const
 
 
 template <>
-const DataRef<int>& DataRef<int>::operator=(const int& value)
+PPL_API const DataRef<int>& DataRef<int>::operator=(const int& value)
 {
     if (m_read_write != ReadOnly)
         XPLMSetDatai(m_data_ref, value);
@@ -213,7 +213,7 @@ const DataRef<int>& DataRef<int>::operator=(const int& value)
 }
 
 template <>
-const DataRef<float>& DataRef<float>::operator=(const float& value)
+PPL_API const DataRef<float>& DataRef<float>::operator=(const float& value)
 {
     if (m_read_write != ReadOnly)
         XPLMSetDataf(m_data_ref, value);
@@ -221,7 +221,7 @@ const DataRef<float>& DataRef<float>::operator=(const float& value)
 }
 
 template <>
-const DataRef<double>& DataRef<double>::operator=(const double& value)
+PPL_API const DataRef<double>& DataRef<double>::operator=(const double& value)
 {
     if (m_read_write != ReadOnly)
         XPLMSetDatad(m_data_ref, value);
@@ -229,7 +229,7 @@ const DataRef<double>& DataRef<double>::operator=(const double& value)
 }
 
 template <>
-const DataRef<std::vector<float> >& DataRef<std::vector<float> >::operator=(const std::vector<float>& value)
+PPL_API const DataRef<std::vector<float> >& DataRef<std::vector<float> >::operator=(const std::vector<float>& value)
 {
     if (m_read_write != ReadOnly)
         XPLMSetDatavf(m_data_ref, const_cast<float*>(&value[0]), 0, value.size());
@@ -237,7 +237,7 @@ const DataRef<std::vector<float> >& DataRef<std::vector<float> >::operator=(cons
 }
 
 template <>
-const DataRef<std::vector<int> >& DataRef<std::vector<int> >::operator=(const std::vector<int>& value)
+PPL_API const DataRef<std::vector<int> >& DataRef<std::vector<int> >::operator=(const std::vector<int>& value)
 {
     if (m_read_write != ReadOnly)
         XPLMSetDatavi(m_data_ref, const_cast<int*>(&value[0]), 0, value.size());
@@ -245,7 +245,7 @@ const DataRef<std::vector<int> >& DataRef<std::vector<int> >::operator=(const st
 }
 
 template <>
-const DataRef<std::string>& DataRef<std::string>::operator=(const std::string& value)
+PPL_API const DataRef<std::string>& DataRef<std::string>::operator=(const std::string& value)
 {
     if (m_read_write != ReadOnly)
         XPLMSetDatab(m_data_ref, const_cast<char*>(value.c_str()) , 0, value.size() + 1);
@@ -256,21 +256,21 @@ const DataRef<std::string>& DataRef<std::string>::operator=(const std::string& v
 ///////////////////////////////////////////////////////////////////////////////
 
 template<>
-dataref_trait<std::vector<float> >::BasicType DataRef<std::vector<float> >::operator[](std::size_t index) const
+PPL_API dataref_trait<std::vector<float> >::BasicType DataRef<std::vector<float> >::operator[](std::size_t index) const
 {
     const std::vector<float>& vf(*this);
     return vf[index];
 }
 
 template<>
-dataref_trait<std::vector<int> >::BasicType DataRef<std::vector<int> >::operator[](std::size_t index) const
+PPL_API dataref_trait<std::vector<int> >::BasicType DataRef<std::vector<int> >::operator[](std::size_t index) const
 {
     const std::vector<int>& vi(*this);
     return vi[index];
 }
 
 template<>
-dataref_trait<std::string>::BasicType DataRef<std::string>::operator[](std::size_t index) const
+PPL_API dataref_trait<std::string>::BasicType DataRef<std::string>::operator[](std::size_t index) const
 {
     const std::string& s(*this);
     return s[index];
@@ -282,25 +282,25 @@ dataref_trait<std::string>::BasicType DataRef<std::string>::operator[](std::size
 
 
 template <>
-bool DataRef<int>::hasChanged() const
+PPL_API bool DataRef<int>::hasChanged() const
 {
     return m_history != operator int();
 }
 
 template <>
-bool DataRef<float>::hasChanged() const
+PPL_API bool DataRef<float>::hasChanged() const
 {
     return (std::fabs(m_history - operator float()) > std::numeric_limits<float>::epsilon() );
 }
 
 template <>
-bool DataRef<double>::hasChanged() const
+PPL_API bool DataRef<double>::hasChanged() const
 {
     return (std::fabs(m_history - operator double()) > std::numeric_limits<double>::epsilon() );
 }
 
 template <>
-bool DataRef<std::vector<int> >::hasChanged() const
+PPL_API bool DataRef<std::vector<int> >::hasChanged() const
 {
     const std::vector<int>& actual = operator std::vector<int>();
     if (m_history.size() != actual.size())
@@ -312,7 +312,7 @@ bool DataRef<std::vector<int> >::hasChanged() const
 }
 
 template <>
-bool DataRef<std::vector<float> >::hasChanged() const
+PPL_API bool DataRef<std::vector<float> >::hasChanged() const
 {
     const std::vector<float>& actual = operator std::vector<float>();
     if (m_history.size() != actual.size())
@@ -324,7 +324,7 @@ bool DataRef<std::vector<float> >::hasChanged() const
 }
 
 template <>
-bool DataRef<std::string>::hasChanged() const
+PPL_API bool DataRef<std::string>::hasChanged() const
 {
     const std::string& actual = operator std::string();
     if (m_history.size() != actual.size())
@@ -334,7 +334,7 @@ bool DataRef<std::string>::hasChanged() const
 
 
 template <>
-void DataRef<std::vector<int> >::forceChanged()
+PPL_API void DataRef<std::vector<int> >::forceChanged()
 {
     const std::vector<int>& actual = operator std::vector<int>();
     if (m_history.size() != actual.size())
@@ -344,17 +344,18 @@ void DataRef<std::vector<int> >::forceChanged()
 }
 
 template <>
-void DataRef<std::vector<float> >::forceChanged()
+PPL_API void DataRef<std::vector<float> >::forceChanged()
 {
     const std::vector<float>& actual = operator std::vector<float>();
     if (m_history.size() != actual.size())
         return;
     for (std::size_t i = 0; i < m_history.size() ; ++i)
-        m_history[i] = std::numeric_limits<float>::max();
+        // ugly syntax from http://stackoverflow.com/questions/13416418
+        m_history[i] = (std::numeric_limits<float>::max)();
 }
 
 template <>
-void DataRef<std::string>::forceChanged()
+PPL_API void DataRef<std::string>::forceChanged()
 {
     const std::string& actual = operator std::string();
     if (m_history.size() != actual.size())
@@ -365,7 +366,7 @@ void DataRef<std::string>::forceChanged()
 
 
 template<>
-void DataRef<std::vector<int> >::setVal(std::size_t pos, int val)
+PPL_API void DataRef<std::vector<int> >::setVal(std::size_t pos, int val)
 {
     if (cache_.size() <= pos)
         throw std::out_of_range("");
@@ -374,7 +375,7 @@ void DataRef<std::vector<int> >::setVal(std::size_t pos, int val)
 }
 
 template<>
-void DataRef<std::vector<float> >::setVal(std::size_t pos, float val)
+PPL_API void DataRef<std::vector<float> >::setVal(std::size_t pos, float val)
 {
     if (cache_.size() <= pos)
         throw std::out_of_range("");
@@ -383,7 +384,7 @@ void DataRef<std::vector<float> >::setVal(std::size_t pos, float val)
 }
 
 template<>
-void DataRef<std::string >::setVal(std::size_t pos, char val)
+PPL_API void DataRef<std::string >::setVal(std::size_t pos, char val)
 {
     if (cache_.size() <= pos)
         throw std::out_of_range("");
@@ -392,7 +393,7 @@ void DataRef<std::string >::setVal(std::size_t pos, char val)
 }
 
 template<>
-void DataRef<std::vector<int> >::reserve(std::size_t i)
+PPL_API void DataRef<std::vector<int> >::reserve(std::size_t i)
 {
     if (cache_.size() < i)
         cache_.resize(i);
@@ -400,14 +401,14 @@ void DataRef<std::vector<int> >::reserve(std::size_t i)
 }
 
 template<>
-void DataRef<std::vector<float> >::reserve(std::size_t i)
+PPL_API void DataRef<std::vector<float> >::reserve(std::size_t i)
 {
     if (cache_.size() < i)
         cache_.resize(i);
     XPLMSetDatavf(m_data_ref, const_cast<float*>(&cache_[0]), 0, i);
 }
 template<>
-void DataRef<std::string >::reserve(std::size_t i)
+PPL_API void DataRef<std::string >::reserve(std::size_t i)
 {
     if (cache_.size() < i)
         cache_.resize(i);
@@ -415,7 +416,7 @@ void DataRef<std::string >::reserve(std::size_t i)
 }
 
 template<>
-void DataRef<std::vector<int> >::reserve()
+PPL_API void DataRef<std::vector<int> >::reserve()
 {
     std::size_t i = XPLMGetDatavi(m_data_ref, NULL, 0, 0);
     cache_.resize(i);
@@ -423,14 +424,14 @@ void DataRef<std::vector<int> >::reserve()
 }
 
 template<>
-void DataRef<std::vector<float> >::reserve()
+PPL_API void DataRef<std::vector<float> >::reserve()
 {
     std::size_t i = XPLMGetDatavf(m_data_ref, NULL, 0, 0);
     cache_.resize(i);
     m_history.resize(i);
 }
 template<>
-void DataRef<std::string >::reserve()
+PPL_API void DataRef<std::string >::reserve()
 {
     std::size_t i = XPLMGetDatab(m_data_ref, NULL, 0, 0);
     cache_.resize(i);

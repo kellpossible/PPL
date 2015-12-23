@@ -4,10 +4,10 @@
 #define PRIVATENAMESPACE YourNamespaceHere
 #define INLINE_LIBRARY
 
-#include "namespaces.h"
 #include "log.h"
 #include "logwriter.h"
-//#include "pluginpath.h"
+#include "pluginpath.h"
+#include "dataref.h"
 
 using namespace std;
 using namespace PPL;
@@ -16,7 +16,22 @@ using namespace PPL;
 float flcbRunImmediately ( float, float, int, void * );
 float flcbRunDelay ( float, float, int, void * );
 float flcbRunEachFrame ( float, float, int, void * );
-//DataRef<int> simIsPaused( "sim/time/paused" );
+DataRef<int> simIsPaused( "sim/time/paused" );
+
+// Auto-Retract Flaps
+// This demonstrates using PPL::DataRef to retract the flaps when a certain airspeed is reached.
+DataRef<float> indicatedAirspeed( "sim/cockpit2/gauges/indicators/airspeed_kts_pilot" );
+DataRef<float> flapControl( "sim/cockpit2/controls/flap_ratio", ReadWrite );
+const float flapRetractSpeedKts( 80.f );
+
+void flapAutoRetract() {
+  // Call this function from the each-frame Flight Loop Callback function.
+  if( indicatedAirspeed >= flapRetractSpeedKts && flapControl > 0 ) {
+    Log() << Log::Info << "Flaps auto-retracted as airspeed is greater than "
+          << flapRetractSpeedKts << Log::endl;
+    flapControl = 0;
+  }
+}
 
 PLUGIN_API int XPluginStart(
     char * outName,
@@ -30,9 +45,8 @@ PLUGIN_API int XPluginStart(
   strcpy_s(outSig,  sizeof(pluginSig),  pluginSig);
   strcpy_s(outDesc, sizeof(pluginDesc), pluginDesc);
 
-  LogWriter::getLogger().setLogFile( "ppl-hello.txt" );
-
-  Log() << Log::Info << "Start" << Log::endl;
+  // This statement sets up the path of the log-file, which we can access using Log().
+  LogWriter::getLogger().setLogFile( PluginPath::prependPlanePath( "PPL-Example.log" ) );
 
   // Register FLCB
   XPLMRegisterFlightLoopCallback(flcbRunImmediately, 1.f, 0); //call after 1 second
@@ -43,8 +57,6 @@ PLUGIN_API int XPluginStart(
 }
 
 PLUGIN_API void XPluginStop(void) {
-  Log() << Log::Info << "Stop" << Log::endl;
-
   // Unregister FLCB
   XPLMUnregisterFlightLoopCallback( flcbRunImmediately, 0 );
   XPLMUnregisterFlightLoopCallback( flcbRunDelay, 0 );
@@ -52,14 +64,13 @@ PLUGIN_API void XPluginStop(void) {
 }
 
 PLUGIN_API void XPluginDisable(void) {
-  Log() << Log::Info << "Disable" << Log::endl;
 }
+
 PLUGIN_API int XPluginEnable(void) {
-  Log() << Log::Info << "Enable" << Log::endl;
   return 1;
 }
+
 PLUGIN_API void XPluginReceiveMessage(XPLMPluginID, long, void *) {
-  Log() << Log::Info << "Receive Message" << Log::endl;
 }
 
 // FLCB body
@@ -69,17 +80,18 @@ float flcbRunImmediately( float, float, int, void * ) {
 }
 
 float flcbRunDelay( float, float, int, void * ) {
-  Log() << Log::Info << "RunDelay" << Log::endl;
-
+  // empty
   return 0.f;
 }
 
 float flcbRunEachFrame( float dTime, float, int, void * ) {
-  //  if( simIsPaused == 0 ) {
-  //    if( dTime > 0.1 )
-  //      dTime = 0.1f;
-  // empty
-  //  }
+  if( simIsPaused == 0 ) {
+    // clamp dTime to 0.1 seconds
+    if( dTime > 0.1 )
+      dTime = 0.1f;
+
+    flapAutoRetract();
+  }
   return -1.f;
 }
 
