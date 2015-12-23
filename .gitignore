@@ -1,4 +1,6 @@
 .directory
 Makefile
 objects/
-ppl.pro.user
+*.pro.user
+example/release/
+*.lnk
