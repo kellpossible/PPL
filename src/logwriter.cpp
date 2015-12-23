@@ -31,14 +31,14 @@
 
 using namespace PPLNAMESPACE;
 
-LogWriter::LogWriter()
+PPL_API LogWriter::LogWriter()
 {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-LogWriter::~LogWriter()
+PPL_API LogWriter::~LogWriter()
 {
     if (m_logfile)
         m_logfile.close();
@@ -47,7 +47,7 @@ LogWriter::~LogWriter()
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-void LogWriter::setLogFile(const std::string& filename)
+PPL_API void LogWriter::setLogFile(const std::string& filename)
 {
     m_logfile.open(filename.c_str(), std::ios_base::out | std::ios_base::trunc);
 }
@@ -55,7 +55,7 @@ void LogWriter::setLogFile(const std::string& filename)
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-void LogWriter::postEntry(const LogEntry& entry)
+PPL_API void LogWriter::postEntry(const LogEntry& entry)
 {
     switch (entry.lvl) {
     case L_INFO:
@@ -91,7 +91,7 @@ void LogWriter::postEntry(const LogEntry& entry)
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-LogWriter& LogWriter::getLogger()
+PPL_API LogWriter& LogWriter::getLogger()
 {
     // Meyers Singleton. Threadsafe in gcc, but not in MSVC !!!
     static LogWriter writer;

@@ -36,8 +36,14 @@
 #define EVALUATOR(x,y)  PASTER(x,y)
 #define PPLNAMESPACE EVALUATOR(PPL, PRIVATENAMESPACE)
 
+// cribbed from http://stackoverflow.com/questions/25606736
+#if defined(INLINE_LIBRARY)
+#define PPL_API inline
+#elif defined(STATIC_LIBRARY)
+#define PPL_API
+// DLL export prefixes can go here
+#endif // PPL_API selector if-defined
 
 namespace PPLNAMESPACE{} namespace PPL = PPLNAMESPACE;
-
 
 #endif // NAMESPACES_H

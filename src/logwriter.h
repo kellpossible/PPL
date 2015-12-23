@@ -71,4 +71,8 @@ private:
 
 }
 
+#ifdef INLINE_LIBRARY
+#include "logwriter.cpp"
+#endif
+
 #endif // LOGWRITER_H

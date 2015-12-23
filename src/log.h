@@ -141,4 +141,8 @@ private:
 };
 }
 
+#ifdef INLINE_LIBRARY
+#include "log.cpp"
+#endif
+
 #endif // LOG_H

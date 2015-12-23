@@ -10,6 +10,7 @@ VERSION = 1.0.0
 INCLUDEPATH += ../../SDK/CHeaders/XPLM
 INCLUDEPATH += ../../SDK/CHeaders/Wrappers
 INCLUDEPATH += ../../SDK/CHeaders/Widgets
+INCLUDEPATH += ../../PPL/src
 
 # Defined to use X-Plane SDK 2.0 capabilities - no backward compatibility before 9.0
 DEFINES += XPLM210=1 XPLM200=1
@@ -17,7 +18,7 @@ DEFINES += XPLM210=1 XPLM200=1
 
 win32 {
     DEFINES += APL=0 IBM=1 LIN=0
-    LIBS += -L../../SDK/Libraries/Win
+    LIBS += -L"$$PWD/../../SDK/Libraries/Win"
     LIBS += -lXPLM_64 -lXPWidgets_64
     TARGET = win.xpl
 }
