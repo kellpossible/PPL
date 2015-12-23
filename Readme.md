@@ -5,7 +5,7 @@ StackOverflow post here: http://http://stackoverflow.com/questions/25606736.
 
 To use it in this way, put `#define LIBRARY_INLINE` before including PPL headers:
 
-```cpp
+```c++
 //main.cpp
 #define PRIVATENAMESPACE YourNamespaceHere
 #define INLINE_LIBRARY

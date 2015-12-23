@@ -8,6 +8,7 @@
 #include "logwriter.h"
 #include "pluginpath.h"
 #include "dataref.h"
+#include "owneddata.h"
 
 using namespace std;
 using namespace PPL;
@@ -22,7 +23,7 @@ DataRef<int> simIsPaused( "sim/time/paused" );
 // This demonstrates using PPL::DataRef to retract the flaps when a certain airspeed is reached.
 DataRef<float> indicatedAirspeed( "sim/cockpit2/gauges/indicators/airspeed_kts_pilot" );
 DataRef<float> flapControl( "sim/cockpit2/controls/flap_ratio", ReadWrite );
-const float flapRetractSpeedKts( 80.f );
+OwnedData<float> flapRetractSpeedKts( "Dozer/PPL-Example/flap_retract_speed_kts", ReadWrite, true );
 
 void flapAutoRetract() {
   // Call this function from the each-frame Flight Loop Callback function.
@@ -47,6 +48,9 @@ PLUGIN_API int XPluginStart(
 
   // This statement sets up the path of the log-file, which we can access using Log().
   LogWriter::getLogger().setLogFile( PluginPath::prependPlanePath( "PPL-Example.log" ) );
+
+  // initialise OwnedData instances
+  flapRetractSpeedKts = 80;
 
   // Register FLCB
   XPLMRegisterFlightLoopCallback(flcbRunImmediately, 1.f, 0); //call after 1 second

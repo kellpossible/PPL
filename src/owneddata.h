@@ -230,4 +230,8 @@ void OwnedData<std::vector<float> >::registerReadWrite();
 
 }
 
+#ifdef INLINE_LIBRARY
+#include "owneddata.cpp"
+#endif
+
 #endif // OWNEDDATA_H

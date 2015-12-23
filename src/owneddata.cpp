@@ -32,7 +32,7 @@
 using namespace PPLNAMESPACE;
 
 template <>
-void OwnedData<int>::registerRead()
+PPL_API void OwnedData<int>::registerRead()
 {
     m_data_ref = XPLMRegisterDataAccessor( m_data_ref_identifier.c_str(), xplmType_Int, 0,
                                                  readFunc<int>, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
@@ -45,7 +45,7 @@ void OwnedData<int>::registerRead()
 ///////////////////////////////////////////////////////////////////////////////
 
 template <>
-void OwnedData<float>::registerRead()
+PPL_API void OwnedData<float>::registerRead()
 {
     m_data_ref = XPLMRegisterDataAccessor( m_data_ref_identifier.c_str(), xplmType_Float, 0,
                                                  NULL, NULL, readFunc<float>, NULL, NULL, NULL, NULL, NULL,
@@ -58,7 +58,7 @@ void OwnedData<float>::registerRead()
 ///////////////////////////////////////////////////////////////////////////////
 
 template <>
-void OwnedData<double>::registerRead()
+PPL_API void OwnedData<double>::registerRead()
 {
     m_data_ref = XPLMRegisterDataAccessor( m_data_ref_identifier.c_str(), xplmType_Double, 0,
                                                  NULL, NULL, NULL, NULL, readFunc<double>, NULL, NULL, NULL,
@@ -71,7 +71,7 @@ void OwnedData<double>::registerRead()
 ///////////////////////////////////////////////////////////////////////////////
 
 template <>
-void OwnedData<std::string>::registerRead()
+PPL_API void OwnedData<std::string>::registerRead()
 {
     m_data_ref = XPLMRegisterDataAccessor( m_data_ref_identifier.c_str(), xplmType_Data, 0,
                                                  NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
@@ -84,7 +84,7 @@ void OwnedData<std::string>::registerRead()
 ///////////////////////////////////////////////////////////////////////////////
 
 template <>
-void OwnedData<std::vector<float> >::registerRead()
+PPL_API void OwnedData<std::vector<float> >::registerRead()
 {
     m_data_ref = XPLMRegisterDataAccessor( m_data_ref_identifier.c_str(), xplmType_FloatArray, 0,
                                                  NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
@@ -98,7 +98,7 @@ void OwnedData<std::vector<float> >::registerRead()
 
 
 template <>
-void OwnedData<int>::registerWrite()
+PPL_API void OwnedData<int>::registerWrite()
 {
     m_data_ref = XPLMRegisterDataAccessor( m_data_ref_identifier.c_str(), xplmType_Int, 1,
                                              NULL, writeFunc<int>, NULL, NULL, NULL, NULL, NULL, NULL,
@@ -111,7 +111,7 @@ void OwnedData<int>::registerWrite()
 ///////////////////////////////////////////////////////////////////////////////
 
 template <>
-void OwnedData<float>::registerWrite()
+PPL_API void OwnedData<float>::registerWrite()
 {
     m_data_ref = XPLMRegisterDataAccessor( m_data_ref_identifier.c_str(), xplmType_Float, 1,
                                              NULL, NULL, NULL, writeFunc<float>, NULL, NULL, NULL, NULL,
@@ -124,7 +124,7 @@ void OwnedData<float>::registerWrite()
 ///////////////////////////////////////////////////////////////////////////////
 
 template <>
-void OwnedData<double>::registerWrite()
+PPL_API void OwnedData<double>::registerWrite()
 {
     m_data_ref = XPLMRegisterDataAccessor( m_data_ref_identifier.c_str(), xplmType_Double, 1,
                                                  NULL, NULL, NULL, NULL, NULL, writeFunc<double>, NULL, NULL,
@@ -137,7 +137,7 @@ void OwnedData<double>::registerWrite()
 ///////////////////////////////////////////////////////////////////////////////
 
 template <>
-void OwnedData<std::string>::registerWrite()
+PPL_API void OwnedData<std::string>::registerWrite()
 {
     m_data_ref = XPLMRegisterDataAccessor( m_data_ref_identifier.c_str(), xplmType_Data, 1,
                                                  NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
@@ -150,7 +150,7 @@ void OwnedData<std::string>::registerWrite()
 ///////////////////////////////////////////////////////////////////////////////
 
 template <>
-void OwnedData<std::vector<float> >::registerWrite()
+PPL_API void OwnedData<std::vector<float> >::registerWrite()
 {
     m_data_ref = XPLMRegisterDataAccessor( m_data_ref_identifier.c_str(), xplmType_FloatArray, 1,
                                                  NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
@@ -164,7 +164,7 @@ void OwnedData<std::vector<float> >::registerWrite()
 
 
 template <>
-void OwnedData<int>::registerReadWrite()
+PPL_API void OwnedData<int>::registerReadWrite()
 {
     m_data_ref = XPLMRegisterDataAccessor( m_data_ref_identifier.c_str(), xplmType_Int, 1,
                                                  readFunc<int>, writeFunc<int>, NULL, NULL, NULL, NULL, NULL, NULL,
@@ -177,7 +177,7 @@ void OwnedData<int>::registerReadWrite()
 ///////////////////////////////////////////////////////////////////////////////
 
 template <>
-void OwnedData<float>::registerReadWrite()
+PPL_API void OwnedData<float>::registerReadWrite()
 {
     m_data_ref = XPLMRegisterDataAccessor( m_data_ref_identifier.c_str(), xplmType_Float, 1,
                                                  NULL, NULL, readFunc<float>, writeFunc<float>, NULL, NULL, NULL, NULL,
@@ -190,7 +190,7 @@ void OwnedData<float>::registerReadWrite()
 ///////////////////////////////////////////////////////////////////////////////
 
 template <>
-void OwnedData<double>::registerReadWrite()
+PPL_API void OwnedData<double>::registerReadWrite()
 {
     m_data_ref = XPLMRegisterDataAccessor( m_data_ref_identifier.c_str(), xplmType_Double, 1,
                                                  NULL, NULL, NULL, NULL, readFunc<double>, writeFunc<double>, NULL, NULL,
@@ -203,7 +203,7 @@ void OwnedData<double>::registerReadWrite()
 ///////////////////////////////////////////////////////////////////////////////
 
 template <>
-void OwnedData<std::string>::registerReadWrite()
+PPL_API void OwnedData<std::string>::registerReadWrite()
 {
     m_data_ref = XPLMRegisterDataAccessor( m_data_ref_identifier.c_str(), xplmType_Data, 1,
                                                  NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
@@ -216,7 +216,7 @@ void OwnedData<std::string>::registerReadWrite()
 ///////////////////////////////////////////////////////////////////////////////
 
 template <>
-void OwnedData<std::vector<float> >::registerReadWrite()
+PPL_API void OwnedData<std::vector<float> >::registerReadWrite()
 {
     m_data_ref = XPLMRegisterDataAccessor( m_data_ref_identifier.c_str(), xplmType_FloatArray, 1,
                                                  NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
@@ -229,7 +229,7 @@ void OwnedData<std::vector<float> >::registerReadWrite()
 ///////////////////////////////////////////////////////////////////////////////
 
 
-int PPL::readFuncStr(void* inRefCon, void* outValue, int inOffset, int inMaxLength)
+PPL_API int PPL::readFuncStr(void* inRefCon, void* outValue, int inOffset, int inMaxLength)
 {
     OwnedData<std::string>* p_owned_data = static_cast<OwnedData<std::string>*>(inRefCon);
     long length = p_owned_data->value().length();
@@ -243,7 +243,7 @@ int PPL::readFuncStr(void* inRefCon, void* outValue, int inOffset, int inMaxLeng
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-void PPL::writeFuncStr(void* inRefCon, void* inValue, int inOffset, int inMaxLength)
+PPL_API void PPL::writeFuncStr(void* inRefCon, void* inValue, int inOffset, int inMaxLength)
 {
     OwnedData<std::string>* p_owned_data = static_cast<OwnedData<std::string>*>(inRefCon);
     char* str = static_cast<char*>(inValue);
@@ -253,7 +253,7 @@ void PPL::writeFuncStr(void* inRefCon, void* inValue, int inOffset, int inMaxLen
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-int PPL::readFuncVF(void* inRefCon, float* outValues, int inOffset, int inMaxLength)
+PPL_API int PPL::readFuncVF(void* inRefCon, float* outValues, int inOffset, int inMaxLength)
 {
     std::size_t max_length = static_cast<unsigned int>(inMaxLength);
     OwnedData<std::vector<float> >* p_owned_data = static_cast<OwnedData<std::vector<float> >*>(inRefCon);
@@ -267,7 +267,7 @@ int PPL::readFuncVF(void* inRefCon, float* outValues, int inOffset, int inMaxLen
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-void PPL::writeFuncVF(void* inRefCon, float* inValues, int inOffset, int inMaxLength)
+PPL_API void PPL::writeFuncVF(void* inRefCon, float* inValues, int inOffset, int inMaxLength)
 {
     OwnedData<std::vector<float> >* p_owned_data = static_cast<OwnedData<std::vector<float> >*>(inRefCon);
     p_owned_data->setValue(std::vector<float>(inValues+inOffset, inValues+inOffset+inMaxLength));
