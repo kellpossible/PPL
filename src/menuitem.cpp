@@ -31,7 +31,7 @@
 
 using namespace PPLNAMESPACE;
 
-MenuItem::MenuItem(const std::string& title)
+PPL_API MenuItem::MenuItem(const std::string& title)
 {
     m_item_id = XPLMAppendMenuItem(XPLMFindPluginsMenu(), title.c_str(), NULL, 1);
     m_menu_id = XPLMCreateMenu(title.c_str(), XPLMFindPluginsMenu(), m_item_id, menuHandler, this);
@@ -40,7 +40,7 @@ MenuItem::MenuItem(const std::string& title)
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-MenuItem::~MenuItem()
+PPL_API MenuItem::~MenuItem()
 {
     XPLMClearAllMenuItems(m_menu_id);
     XPLMEnableMenuItem(XPLMFindPluginsMenu(), m_item_id, 0);
@@ -53,7 +53,7 @@ MenuItem::~MenuItem()
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-void MenuItem::menuHandler(void *iRef)
+PPL_API void MenuItem::menuHandler(void *iRef)
 {
     intptr_t menu_item = reinterpret_cast<intptr_t>(iRef);
     m_actions[menu_item]->doAction();
@@ -62,7 +62,7 @@ void MenuItem::menuHandler(void *iRef)
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-void MenuItem::addSubItem(Action* action)
+PPL_API void MenuItem::addSubItem(Action* action)
 {
     m_actions.push_back(action);
     XPLMAppendMenuItem(m_menu_id, action->name().c_str(), reinterpret_cast<void*>(m_actions.size()-1), 1);
@@ -71,7 +71,7 @@ void MenuItem::addSubItem(Action* action)
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-void MenuItem::menuHandler(void *mRef, void *iRef)
+PPL_API void MenuItem::menuHandler(void *mRef, void *iRef)
 {
     MenuItem* menu = static_cast<MenuItem*>(mRef);
     menu->menuHandler(iRef);

@@ -31,7 +31,7 @@
 
 using namespace PPLNAMESPACE;
 
-MessageWindow::MessageWindow(int width, int height, const std::string& title, const std::string& message, bool quit):
+PPL_API MessageWindow::MessageWindow(int width, int height, const std::string& title, const std::string& message, bool quit):
         m_is_displayed(false),
         m_xp_width("sim/graphics/view/window_width"),
         m_xp_height("sim/graphics/view/window_height")
@@ -62,7 +62,7 @@ MessageWindow::MessageWindow(int width, int height, const std::string& title, co
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-MessageWindow::~MessageWindow()
+PPL_API MessageWindow::~MessageWindow()
 {
     XPSetWidgetProperty(m_box_widget, xpProperty_Object, 0);
     XPDestroyWidget(m_box_widget,1);
@@ -71,7 +71,7 @@ MessageWindow::~MessageWindow()
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-void MessageWindow::setWidth(int width)
+PPL_API void MessageWindow::setWidth(int width)
 {
     if (width > m_xp_width)
         throw (BoxOutOfBoundsException("Requested window width greater than X-Plane window"));
@@ -82,7 +82,7 @@ void MessageWindow::setWidth(int width)
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-void MessageWindow::setHeight(int height)
+PPL_API void MessageWindow::setHeight(int height)
 {
     if (height > m_xp_height)
         throw (BoxOutOfBoundsException("Requested window height greater than X-Plane window"));
@@ -93,7 +93,7 @@ void MessageWindow::setHeight(int height)
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-void MessageWindow::setTitle(const std::string &title)
+PPL_API void MessageWindow::setTitle(const std::string &title)
 {
     m_title = title;
 }
@@ -101,7 +101,7 @@ void MessageWindow::setTitle(const std::string &title)
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-void MessageWindow::setMessage(const std::string &message)
+PPL_API void MessageWindow::setMessage(const std::string &message)
 {
     m_message = message;
 }
@@ -109,7 +109,7 @@ void MessageWindow::setMessage(const std::string &message)
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-void MessageWindow::quitSimOnConfirm(bool quit)
+PPL_API void MessageWindow::quitSimOnConfirm(bool quit)
 {
     m_quit_on_confirm = quit;
 }
@@ -117,7 +117,7 @@ void MessageWindow::quitSimOnConfirm(bool quit)
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-void MessageWindow::display()
+PPL_API void MessageWindow::display()
 {
     createSurroundingBox();
     createInnerScreen();
@@ -170,7 +170,7 @@ void MessageWindow::display()
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-bool MessageWindow::isDisplayed()
+PPL_API bool MessageWindow::isDisplayed()
 {
     return m_is_displayed;
 }
@@ -178,7 +178,7 @@ bool MessageWindow::isDisplayed()
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-int MessageWindow::processMessages(XPWidgetMessage inMessage, intptr_t, intptr_t)
+PPL_API int MessageWindow::processMessages(XPWidgetMessage inMessage, intptr_t, intptr_t)
 {
     if (inMessage == xpMessage_CloseButtonPushed)
     {
@@ -199,7 +199,7 @@ int MessageWindow::processMessages(XPWidgetMessage inMessage, intptr_t, intptr_t
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-int MessageWindow::widgetCallback(XPWidgetMessage inMessage, XPWidgetID inWidget, intptr_t param1, intptr_t param2)
+PPL_API int MessageWindow::widgetCallback(XPWidgetMessage inMessage, XPWidgetID inWidget, intptr_t param1, intptr_t param2)
 {
     MessageWindow* widget = reinterpret_cast<MessageWindow *>(XPGetWidgetProperty(inWidget, xpProperty_Object, NULL));
     if (widget)
@@ -212,7 +212,7 @@ int MessageWindow::widgetCallback(XPWidgetMessage inMessage, XPWidgetID inWidget
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-int MessageWindow::splitStr(std::list<std::string>& L, const std::string& seq, const std::string& _1cdelim, bool _removews )
+PPL_API int MessageWindow::splitStr(std::list<std::string>& L, const std::string& seq, const std::string& _1cdelim, bool _removews )
 {
     typedef std::string::size_type ST;
     std::string delims = _1cdelim;
@@ -241,7 +241,7 @@ int MessageWindow::splitStr(std::list<std::string>& L, const std::string& seq, c
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-void MessageWindow::createSurroundingBox()
+PPL_API void MessageWindow::createSurroundingBox()
 {
     m_box_widget = XPCreateWidget(m_left,
                                   m_top,
@@ -259,7 +259,7 @@ void MessageWindow::createSurroundingBox()
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-void MessageWindow::createInnerScreen()
+PPL_API void MessageWindow::createInnerScreen()
 {
     m_screen_widget = XPCreateWidget(m_left + 5,
                                      m_top - 25,

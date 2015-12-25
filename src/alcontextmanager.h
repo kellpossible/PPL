@@ -49,6 +49,10 @@
 #include "alsoundbuffer.h"
 #include "namespaces.h"
 
+#ifdef INLINE_LIBRARY
+#error ALContextManager cannot be used as a header-only class. Compile PPL as a static library instead.
+#endif
+
 namespace PPLNAMESPACE {
 
 /**

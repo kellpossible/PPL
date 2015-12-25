@@ -32,7 +32,7 @@
 
 using namespace PPLNAMESPACE;
 
-OnScreenDisplay::OnScreenDisplay(int width, int height, const std::string& title):
+PPL_API OnScreenDisplay::OnScreenDisplay(int width, int height, const std::string& title):
     screen_w_("sim/graphics/view/window_width"),
     screen_h_("sim/graphics/view/window_height"),
     title_(title)
@@ -59,7 +59,7 @@ OnScreenDisplay::OnScreenDisplay(int width, int height, const std::string& title
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-OnScreenDisplay::~OnScreenDisplay()
+PPL_API OnScreenDisplay::~OnScreenDisplay()
 {
     XPSetWidgetProperty(widget_id_, xpProperty_Object, 0);
     XPDestroyWidget(widget_id_,1);
@@ -68,7 +68,7 @@ OnScreenDisplay::~OnScreenDisplay()
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-int OnScreenDisplay::processMessages(XPWidgetMessage inMessage, intptr_t, intptr_t)
+PPL_API int OnScreenDisplay::processMessages(XPWidgetMessage inMessage, intptr_t, intptr_t)
 {
     if (inMessage == xpMessage_CloseButtonPushed)
     {
@@ -81,7 +81,7 @@ int OnScreenDisplay::processMessages(XPWidgetMessage inMessage, intptr_t, intptr
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-int OnScreenDisplay::widgetCallback(XPWidgetMessage inMessage, XPWidgetID inWidget, intptr_t param1, intptr_t param2)
+PPL_API int OnScreenDisplay::widgetCallback(XPWidgetMessage inMessage, XPWidgetID inWidget, intptr_t param1, intptr_t param2)
 {
     OnScreenDisplay* display = reinterpret_cast<OnScreenDisplay*>(XPGetWidgetProperty(inWidget, xpProperty_Object, 0));
     if (display)

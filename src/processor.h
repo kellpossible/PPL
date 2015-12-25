@@ -43,4 +43,8 @@ private:
 
 }
 
+#ifdef INLINE_LIBRARY
+#include "processor.cpp"
+#endif
+
 #endif // PROCESSOR_H

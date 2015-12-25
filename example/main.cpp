@@ -68,8 +68,6 @@
 #include "dataref.h"
 #include "owneddata.h"
 #include "command.h"
-// n.b. at this point, these are the only libraries which will compile as header-only.
-
 #include "simpleini/SimpleIni.h"
 
 using namespace std;
@@ -94,7 +92,7 @@ OwnedData<float> flapRetractSpeedKts( "Dozer/PPL-Example/flap_retract_speed_kts"
 
 
 ////////////////////////////////////////////////////////////////////////////////
-// Configure ini file
+// Configure settings file
 //
 
 CSimpleIniA ini;
@@ -109,7 +107,7 @@ public:
     if( inPhase == xplm_CommandEnd ){
 
       // Save threshold speed to ini file
-      Log() << Log::Info << "Saving ini file." << Log::endl;
+      Log() << Log::Info << "Saving settings file." << Log::endl;
       ini.SetDoubleValue( "Config", "FlapRetractSpeedKts", flapRetractSpeedKts );
       ini.SaveFile( IniFilename.c_str() );
 

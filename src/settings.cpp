@@ -30,7 +30,7 @@
 
 using namespace PPLNAMESPACE;
 
-Settings::Settings(const std::string& filename, bool create_if_not_exists, bool write_new_file):
+PPL_API Settings::Settings(const std::string& filename, bool create_if_not_exists, bool write_new_file):
         m_config_file_name(filename),
         m_file_did_exist_before(false),
         m_create_file_if_not_exists(create_if_not_exists),
@@ -48,7 +48,7 @@ Settings::Settings(const std::string& filename, bool create_if_not_exists, bool 
 ///////////////////////////////////////////////////////////////////////////////
 
 
-Settings::~Settings()
+PPL_API Settings::~Settings()
 {
     if (m_write_new_file) {
         if (m_file_did_exist_before || m_create_file_if_not_exists)
@@ -64,7 +64,7 @@ Settings::~Settings()
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-bool Settings::loadFromFile()
+PPL_API bool Settings::loadFromFile()
 {
     if (m_file_did_exist_before)
     {
@@ -77,7 +77,7 @@ bool Settings::loadFromFile()
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-std::string Settings::get(const std::string &section, const std::string &key)
+PPL_API std::string Settings::get(const std::string &section, const std::string &key)
 {
     return std::string(GetValue(section.c_str(), key.c_str()));
 }
@@ -85,7 +85,7 @@ std::string Settings::get(const std::string &section, const std::string &key)
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-long Settings::getLong(const std::string& section, const std::string& key)
+PPL_API long Settings::getLong(const std::string& section, const std::string& key)
 {
     return GetLongValue(section.c_str(), key.c_str());
 }
@@ -93,7 +93,7 @@ long Settings::getLong(const std::string& section, const std::string& key)
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-void Settings::set(const std::string& section, const std::string& key, const std::string& value)
+PPL_API void Settings::set(const std::string& section, const std::string& key, const std::string& value)
 {
     SetValue(section.c_str(), key.c_str(), value.c_str());
 }
@@ -101,7 +101,7 @@ void Settings::set(const std::string& section, const std::string& key, const std
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-void Settings::setLong(const std::string& section, const std::string& key, long value)
+PPL_API void Settings::setLong(const std::string& section, const std::string& key, long value)
 {
     SetLongValue(section.c_str(), key.c_str(), value);
 }

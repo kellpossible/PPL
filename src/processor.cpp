@@ -30,17 +30,17 @@
 
 using namespace PPLNAMESPACE;
 
-Processor::Processor(float time_to_start)
+PPL_API Processor::Processor(float time_to_start)
 {
     XPLMRegisterFlightLoopCallback(Processor::flightloopcallback, time_to_start, this);
 }
 
-Processor::~Processor()
+PPL_API Processor::~Processor()
 {
     XPLMUnregisterFlightLoopCallback(Processor::flightloopcallback, this);
 }
 
-float Processor::flightloopcallback(float inElapsedSinceLastCall,
+PPL_API float Processor::flightloopcallback(float inElapsedSinceLastCall,
                                     float inElapsedTimeSinceLastFlightLoop,
                                     int inCounter,
                                     void *inRefcon)

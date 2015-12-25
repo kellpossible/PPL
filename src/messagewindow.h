@@ -180,4 +180,8 @@ private:
 
 }
 
+#ifdef INLINE_LIBRARY
+#include "messagewindow.cpp"
+#endif
+
 #endif // MESSAGEWINDOW_H

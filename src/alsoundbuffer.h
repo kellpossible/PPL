@@ -48,6 +48,9 @@
 
 #include "namespaces.h"
 
+#ifdef INLINE_LIBRARY
+#error ALSoundBuffer cannot be used as a header-only class. Compile PPL as a static library instead.
+#endif
 
 namespace PPLNAMESPACE {
 
@@ -135,6 +138,5 @@ private:
 ALuint LoadWav(const std::string& fileName);
 
 }
-
 
 #endif // ALSOUNDBUFFER_H

@@ -58,5 +58,9 @@ private:
 
 }
 
+#ifdef INLINE_LIBRARY
+#include "menuitem.cpp"
+#endif
+
 
 #endif // MENUITEM_H

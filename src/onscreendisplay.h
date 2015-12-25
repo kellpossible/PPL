@@ -54,4 +54,8 @@ private:
 
 }
 
+#ifdef INLINE_LIBRARY
+#include "onscreendisplay.cpp"
+#endif
+
 #endif // ONSCREENDISPLAY_H

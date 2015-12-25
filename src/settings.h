@@ -97,4 +97,9 @@ private:
 };
 
 }
+
+#ifdef INLINE_LIBRARY
+#include "settings.cpp"
+#endif
+
 #endif // SETTINGS_H

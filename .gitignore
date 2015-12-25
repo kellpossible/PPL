@@ -4,3 +4,4 @@ objects/
 *.pro.user
 example/release/
 *.lnk
+*.autosave
