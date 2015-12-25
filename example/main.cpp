@@ -1,4 +1,4 @@
-// Copyright (c) 2013, Jack Deeth
+// Copyright (c) 2015, Jack Deeth
 // All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without

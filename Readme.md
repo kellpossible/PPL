@@ -37,5 +37,5 @@ ini file.
 Todo:
 =====
 
-[ ] Fix OwnedData<vector<float>> implementation
-[ ] Add #ifdef INLINE_LIBRARY, #error to the other classes
+ - Fix `OwnedData<vector<float>>` implementation
+ - Add `#ifdef INLINE_LIBRARY`, `#error` to the other classes
