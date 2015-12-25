@@ -28,21 +28,27 @@
 #include "command.h"
 
 namespace PPLNAMESPACE {
-Command::Command(const char *inName, const char *inDescription, int inBefore) : m_before_(inBefore)
+PPL_API Command::Command( const char* name, const char* description, bool before ) : m_before_(before)
 {
-    m_ref_ = XPLMCreateCommand(inName,inDescription);
-    XPLMRegisterCommandHandler(Command::m_ref_,Command::m_handler_,inBefore,this);
+    m_ref_ = XPLMCreateCommand( name, description );
+    XPLMRegisterCommandHandler( Command::m_ref_,
+                                Command::m_handler_,
+                                (before ? 1 : 0),
+                                this );
 }
 
-Command::~Command()
+PPL_API Command::~Command()
 {
-    XPLMUnregisterCommandHandler(Command::m_ref_,Command::m_handler_,Command::m_before_,this);
+    XPLMUnregisterCommandHandler( Command::m_ref_,
+                                  Command::m_handler_,
+                                  (Command::m_before_ ? 1 : 0),
+                                  this );
 }
 
-int Command::m_handler_(XPLMCommandRef inCommand, XPLMCommandPhase inPhase, void *inRefcon)
+PPL_API int Command::m_handler_( XPLMCommandRef command, XPLMCommandPhase phase, void* refcon )
 {
-    Command* comm = static_cast<Command*>(inRefcon);
-    return comm->handler(inCommand,inPhase);
+    Command* comm = static_cast<Command*>(refcon);
+    return comm->handler(command,phase);
 }
 
 }

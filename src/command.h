@@ -32,20 +32,24 @@
 
 namespace PPLNAMESPACE {
 
-typedef int (* CommandCallback)(XPLMCommandRef,XPLMCommandPhase);
+typedef int (* CommandCallback)( XPLMCommandRef, XPLMCommandPhase );
 
 class Command
 {
 public:
-    Command(const char *inName, const char *inDescription, int inBefore);
+    Command( const char* name, const char* description, bool before );
     virtual ~Command();
-    virtual int handler(XPLMCommandRef inCommand, XPLMCommandPhase inPhase) = 0;
+    virtual int handler( XPLMCommandRef command, XPLMCommandPhase phase ) = 0;
 private:
     XPLMCommandRef m_ref_;
-    int m_before_;
-    static int m_handler_(XPLMCommandRef inCommand, XPLMCommandPhase inPhase,void * inRefcon);
+    bool m_before_;
+    static int m_handler_( XPLMCommandRef command, XPLMCommandPhase phase, void* refcon );
 };
 
 }
+
+#ifdef INLINE_LIBRARY
+#include "command.cpp"
+#endif
 
 #endif // COMMAND_H

@@ -67,20 +67,13 @@
 #include "pluginpath.h"
 #include "dataref.h"
 #include "owneddata.h"
+#include "command.h"
 // n.b. at this point, these are the only libraries which will compile as header-only.
 
 #include "simpleini/SimpleIni.h"
 
 using namespace std;
 using namespace PPL;
-
-////////////////////////////////////////////////////////////////////////////////
-// Configure ini file
-//
-
-CSimpleIniA ini;
-const string IniFilename( PluginPath::prependPlanePath( "PPL-Example.ini" ) );
-
 
 ////////////////////////////////////////////////////////////////////////////////
 // Configure log file
@@ -98,6 +91,36 @@ DataRef<float> flapControl( "sim/cockpit2/controls/flap_ratio", ReadWrite );
 // Publish the flaps-retract threshold speed as a dataref, for in-flight adjustment.
 // The third parameter sets whether or not we register this dataref in DataRefEditor
 OwnedData<float> flapRetractSpeedKts( "Dozer/PPL-Example/flap_retract_speed_kts", ReadWrite, true );
+
+
+////////////////////////////////////////////////////////////////////////////////
+// Configure ini file
+//
+
+CSimpleIniA ini;
+const string IniFilename( PluginPath::prependPlanePath( "PPL-Example.ini" ) );
+
+class SaveSettings : Command {
+public:
+  SaveSettings( const char *name, const char *description, bool before )
+    : Command( name, description, before ) { }
+
+  int handler( XPLMCommandRef, XPLMCommandPhase inPhase ) {
+    if( inPhase == xplm_CommandEnd ){
+
+      // Save threshold speed to ini file
+      Log() << Log::Info << "Saving ini file." << Log::endl;
+      ini.SetDoubleValue( "Config", "FlapRetractSpeedKts", flapRetractSpeedKts );
+      ini.SaveFile( IniFilename.c_str() );
+
+    }
+    return 0;
+  }
+};
+
+SaveSettings saveSettings( "Dozer/ppl_example/save_settings",
+                           "Write flaps retract speed to ini file",
+                           true );
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -164,11 +187,6 @@ PLUGIN_API int XPluginStart(
 
 PLUGIN_API void XPluginStop(void) {
   Log() << Log::Info << "Plugin stopped." << Log::endl;
-
-  // Update ini file
-  Log() << Log::Info << "Updating ini file." << Log::endl;
-  ini.SetDoubleValue( "Config", "FlapRetractSpeedKts", flapRetractSpeedKts );
-  ini.SaveFile( IniFilename.c_str() );
 
 
   // Unregister FLCB
