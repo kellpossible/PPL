@@ -1,4 +1,4 @@
-// Copyright (c) 2013, Philipp Muenzel mail@philippmuenzel.de
+// Copyright (c) 2013, Julio Campagnolo juliocampagnolo@gmail.com
 // All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without
@@ -25,74 +25,24 @@
 // of the authors and should not be interpreted as representing official policies,
 // either expressed or implied, of the FreeBSD Project.
 
-#ifndef TEXTURE_H
-#define TEXTURE_H
-
-#include <string>
-#include <vector>
-#include <stdint.h>
-#include "namespaces.h"
+#include "command.h"
 
 namespace PPLNAMESPACE {
-
-class Texture
+Command::Command(const char *inName, const char *inDescription, int inBefore) : m_before_(inBefore)
 {
-public:
-
-#pragma pack(push, ident, 2)
-
-    struct BMPFILEHEADER
-    {
-        int16_t   bfType;
-        int32_t   bfSize;
-        int16_t   bfReserved1;
-        int16_t   bfReserved2;
-        int32_t    bfOffBits;
-    };
-
-    struct BMPINFOHEADER
-    {
-        int32_t    biSize;
-        int32_t    biWidth;
-        int32_t    biHeight;
-        int16_t   biPlanes;
-        int16_t   biBitCount;
-        int32_t    biCompression;
-        int32_t    biSizeImage;
-        int32_t    biXPelsPerMeter;
-        int32_t    biYPelsPerMeter;
-        int32_t    biClrUsed;
-        int32_t    biClrImportant;
-    };
-
-    struct IMAGEDATA
-    {
-        std::vector<unsigned char> pData;
-        int32_t    Width;
-        int32_t    Height;
-        int32_t    Padding;
-        int16_t   Channels;
-        unsigned int bpp;
-    };
-
-#pragma pack(pop, ident)
-
-    Texture(const std::string& file_name);
-    ~Texture();
-    int id() const;
-    int width() const;
-    int height() const;
-    void drawTex(float left, float top, float right, float bottom, float alpha);
-    void drawColoredTex(float left, float top, float right, float bottom, float color[]); //color[4], including alpha
-
-private:
-
-    void swapRedBlue();
-    IMAGEDATA m_imagedata;
-    int m_id;
-
-};
-
+    m_ref_ = XPLMCreateCommand(inName,inDescription);
+    XPLMRegisterCommandHandler(Command::m_ref_,Command::m_handler_,inBefore,this);
 }
 
-#endif // TEXTURE_H
+Command::~Command()
+{
+    XPLMUnregisterCommandHandler(Command::m_ref_,Command::m_handler_,Command::m_before_,this);
+}
+
+int Command::m_handler_(XPLMCommandRef inCommand, XPLMCommandPhase inPhase, void *inRefcon)
+{
+    Command* comm = static_cast<Command*>(inRefcon);
+    return comm->handler(inCommand,inPhase);
+}
+
+}

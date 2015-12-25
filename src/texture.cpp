@@ -292,3 +292,50 @@ void Texture::swapRedBlue()
     }
 }
 
+void Texture::drawTex(float left, float top, float right, float bottom, float alpha)
+{
+#ifdef BUILD_FOR_STANDALONE
+    glBindTexture(GL_TEXTURE_2D, m_id);
+#else
+    XPLMBindTexture2d(m_id, 0);
+    XPLMSetGraphicsState(0,1,0,0,1,0,0);
+#endif
+
+    glColor4f(1,1,1,alpha);
+    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE );
+    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE );
+    glBegin(GL_QUADS);
+            glTexCoord2f(1, 0.0f); glVertex2f(right, bottom);
+            glTexCoord2f(0, 0.0f); glVertex2f(left, bottom);
+            glTexCoord2f(0, 1.0f); glVertex2f(left, top);
+            glTexCoord2f(1, 1.0f); glVertex2f(right, top);
+    glEnd();
+
+#ifndef BUILD_FOR_STANDALONE
+    XPLMSetGraphicsState(0,0,0,0,1,0,0);
+#endif
+}
+
+void Texture::drawColoredTex(float left, float top, float right, float bottom, float color[4])
+{
+#ifdef BUILD_FOR_STANDALONE
+    glBindTexture(GL_TEXTURE_2D, m_id);
+#else
+    XPLMBindTexture2d(m_id, 0);
+    XPLMSetGraphicsState(0,1,0,0,1,0,0);
+#endif
+
+    glColor4f(color[0],color[1],color[2],color[3]);
+    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE );
+    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE );
+    glBegin(GL_QUADS);
+            glTexCoord2f(1, 0.0f); glVertex2f(right, bottom);
+            glTexCoord2f(0, 0.0f); glVertex2f(left, bottom);
+            glTexCoord2f(0, 1.0f); glVertex2f(left, top);
+            glTexCoord2f(1, 1.0f); glVertex2f(right, top);
+    glEnd();
+
+#ifndef BUILD_FOR_STANDALONE
+    XPLMSetGraphicsState(0,0,0,0,1,0,0);
+#endif
+}

@@ -3,7 +3,7 @@ TEMPLATE = lib
 # Static library without any Qt functionality
 QT -= gui core
 
-CONFIG += static exceptions stl console
+CONFIG += static exceptions stl console withfreetype #withserialization
 CONFIG -= thread qt rtti warn_on
 
 VERSION = 1.0.0
@@ -74,6 +74,7 @@ HEADERS += \
     src/overlaygauge.h \
     src/xposd.h \
     src/log.h \
+    src/command.h \
     src/logwriter.h \
     src/basics.h \
     src/menuitem.h \
@@ -94,6 +95,7 @@ SOURCES += \
     src/texture.cpp \
     src/overlaygauge.cpp \
     src/log.cpp \
+    src/command.cpp \
     src/logwriter.cpp \
     src/menuitem.cpp \
     src/smoothed.cpp \
@@ -113,8 +115,7 @@ withsound {
 
 withfreetype {
     win32 {
-        INCLUDEPATH += include ../../Downloads/freetype-2.3.5/include
-        DEFINES+=FREETYPE2_STATIC
+        INCLUDEPATH += include include/freetype2
     }
     unix:!macx {
         INCLUDEPATH += /usr/include/freetype2
@@ -132,7 +133,7 @@ withserialization {
         INCLUDEPATH += C:\\Boost\\include\\boost-1_52
     }
     unix:!macx {
-        INCLUDEPATH += /usr/local/include/
+        INCLUDEPATH += /usr/include/
     }
     macx {
         INCLUDEPATH += /usr/local/include/
