@@ -67,7 +67,8 @@ template <typename T>
 class OwnedData{
 public:
 
-    typedef void (*DataCallback_f)(const T&);
+    typedef void (*DataWriteCallback_f)(const T&);
+    typedef T (*DataReadCallback_f) (void);
 
     /**
       * create owned date for sharing.
@@ -83,11 +84,13 @@ public:
     OwnedData(const std::string& identifier,
               RWType read_write = ReadOnly,
               bool publish_in_dre = false,
-              DataCallback_f callback = 0):
+              DataWriteCallback_f write_callback = 0,
+              DataReadCallback_f read_callback = 0):
         m_data_ref_identifier(identifier),
         m_data_ref(0),
         m_value(T()),
-        m_callback(callback)
+        m_write_callback(write_callback),
+        m_read_callback(read_callback)
     {
         switch(read_write)
         {
@@ -139,8 +142,8 @@ public:
     void setValue(const T& val)
     {
         m_value = val;
-        if (m_callback)
-            m_callback(val);
+        if (m_write_callback)
+            m_write_callback(val);
     }
 
 
@@ -166,7 +169,8 @@ private:
     std::string m_data_ref_identifier;
     XPLMDataRef m_data_ref;
     T m_value;
-    DataCallback_f m_callback;
+    DataWriteCallback_f m_write_callback;
+    DataReadCallback_f m_read_callback;
 };
 
 ///////////////////////////////////////////////////////////////////////////////
